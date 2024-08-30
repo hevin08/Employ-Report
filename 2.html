@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Records</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="mb-4">Employee Records</h1>
+        <div class="form-group">
+            <label for="salaryFilter">Filter by Salary:</label>
+            <select id="salaryFilter" class="form-control">
+                <option value="">All Salaries</option>
+                <option value="20000">20000</option>
+                <option value="22000">22000</option>
+                <option value="25000">25000</option>
+                <option value="30000">30000</option>
+            </select>
+        </div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>City</th>
+                    <th>Salary</th>
+                    <th>Designation</th>
+                    <th>Department</th>
+                </tr>
+            </thead>
+            <tbody id="employeeTable">
+            </tbody>
+        </table>
+        <div="mt-3">
+            <h4>Total Salary: <span id="totalSalary">0</span></h4>
+    </div>
+    </div>
+
+    <script>
+        const records = [
+            { id: 1, name: "ashish", email: "ashu@gmail.com", phone: "1121212", city: "surat", salary: 20000, degi: "senior", dep: "programming" },
+            { id: 2, name: "hari", email: "hari@gmail.com", phone: "5454545", city: "surat", salary: 22000, degi: "junior", dep: "ui/ux" },
+            { id: 3, name: "raj", email: "raj@gmail.com", phone: "454545", city: "vadodara", salary: 25000, degi: "junior", dep: "bde" },
+            { id: 4, name: "deep", email: "deep@gmail.com", phone: "565656", city: "vapi", salary: 30000, degi: "tl", dep: "webdesign" },
+            { id: 5, name: "jay", email: "jay@gmail.com", phone: "5565656", city: "rajkot", salary: 20000, degi: "senior", dep: "programming" },
+            { id: 6, name: "ajay", email: "ajay@gmail.com", phone: "5565656", city: "vapi", salary: 25000, degi: "manager", dep: "ui/ux" }
+        ];
+
+        const employeeTable = document.getElementById('employeeTable');
+        const totalSalaryElement = document.getElementById('totalSalary');
+        const salaryFilter = document.getElementById('salaryFilter');
+
+        function renderTable(filteredRecords) {
+            employeeTable.innerHTML = '';
+            let totalSalary = 0;
+
+            filteredRecords.forEach(record => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${record.id}</td>
+                    <td>${record.name}</td>
+                    <td>${record.email}</td>
+                    <td>${record.phone}</td>
+                    <td>${record.city}</td>
+                    <td>${record.salary}</td>
+                    <td>${record.degi}</td>
+                    <td>${record.dep}</td>
+                `;
+                employeeTable.appendChild(row);
+                totalSalary += record.salary;
+            });
+
+            totalSalaryElement.textContent = totalSalary;
+        }
+
+        function filterRecords() {
+            const selectedSalary = salaryFilter.value;
+            const filteredRecords = selectedSalary ? records.filter(record => record.salary == selectedSalary) : records;
+            renderTable(filteredRecords);
+        }
+
+        salaryFilter.addEventListener('change', filterRecords);
+
+        renderTable(records);
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</body>
+
+</html>
